@@ -1,0 +1,946 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "ClientAPI.Server",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Auth/refresh-token": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Client/add": {
+      "post": {
+        "tags": [
+          "Client"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddClientDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddClientDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddClientDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Int32GeneralResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Int32GeneralResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Int32GeneralResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Client/paginated": {
+      "get": {
+        "tags": [
+          "Client"
+        ],
+        "parameters": [
+          {
+            "name": "Take",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SearchValue",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "UserId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "UserRoles",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/UserRoles"
+            }
+          },
+          {
+            "name": "DateStart",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "DateEnd",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ClientId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientDTOPaginatedTableResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientDTOPaginatedTableResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientDTOPaginatedTableResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Client/details/{clientId}": {
+      "get": {
+        "tags": [
+          "Client"
+        ],
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientDetailsDTOGeneralResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientDetailsDTOGeneralResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientDetailsDTOGeneralResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Client/details": {
+      "put": {
+        "tags": [
+          "Client"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditDetailsDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditDetailsDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/EditDetailsDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectGeneralResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectGeneralResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectGeneralResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Client/underage": {
+      "delete": {
+        "tags": [
+          "Client"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectGeneralResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectGeneralResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ObjectGeneralResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/WeatherForecast": {
+      "get": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddClientDTO": {
+        "required": [
+          "DateOfBirth",
+          "Email",
+          "FirstName",
+          "InitialDeposit",
+          "LastName",
+          "MiddleName"
+        ],
+        "type": "object",
+        "properties": {
+          "Email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "FirstName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "MiddleName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "LastName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "DateOfBirth": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "InitialDeposit": {
+            "minimum": 1000,
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientDTO": {
+        "type": "object",
+        "properties": {
+          "ClientId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Email": {
+            "type": "string",
+            "nullable": true
+          },
+          "ClientName": {
+            "type": "string",
+            "nullable": true
+          },
+          "Age": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "SavingsDeposit": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientDTOPaginatedTableResponse": {
+        "type": "object",
+        "properties": {
+          "ResponseData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClientDTO"
+            },
+            "nullable": true
+          },
+          "Count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "UserId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ClientId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Email": {
+            "type": "string",
+            "nullable": true
+          },
+          "FirstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "MiddleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "LastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "Birthday": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Age": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "SavingsDeposit": {
+            "type": "number",
+            "format": "double"
+          },
+          "SavingsInterest": {
+            "type": "number",
+            "format": "double"
+          },
+          "NetSavingsInterest": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientDetailsDTOGeneralResponse": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "FailedMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "StatusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          },
+          "Data": {
+            "$ref": "#/components/schemas/ClientDetailsDTO"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CookieOptions": {
+        "type": "object",
+        "properties": {
+          "Domain": {
+            "type": "string",
+            "nullable": true
+          },
+          "Path": {
+            "type": "string",
+            "nullable": true
+          },
+          "Expires": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "Secure": {
+            "type": "boolean"
+          },
+          "SameSite": {
+            "$ref": "#/components/schemas/SameSiteMode"
+          },
+          "HttpOnly": {
+            "type": "boolean"
+          },
+          "MaxAge": {
+            "$ref": "#/components/schemas/TimeSpan"
+          },
+          "IsEssential": {
+            "type": "boolean"
+          },
+          "Extensions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DateOnly": {
+        "type": "object",
+        "properties": {
+          "Year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Month": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Day": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "DayOfWeek": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "DayOfYear": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "DayNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DayOfWeek": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "EditDetailsDTO": {
+        "type": "object",
+        "properties": {
+          "ClientId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "FirstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "MiddleName": {
+            "type": "string",
+            "nullable": true
+          },
+          "LastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "DateOfBirth": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "SavingsDeposit": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "HttpStatusCode": {
+        "enum": [
+          100,
+          101,
+          102,
+          103,
+          200,
+          201,
+          202,
+          203,
+          204,
+          205,
+          206,
+          207,
+          208,
+          226,
+          300,
+          301,
+          302,
+          303,
+          304,
+          305,
+          306,
+          307,
+          308,
+          400,
+          401,
+          402,
+          403,
+          404,
+          405,
+          406,
+          407,
+          408,
+          409,
+          410,
+          411,
+          412,
+          413,
+          414,
+          415,
+          416,
+          417,
+          421,
+          422,
+          423,
+          424,
+          426,
+          428,
+          429,
+          431,
+          451,
+          500,
+          501,
+          502,
+          503,
+          504,
+          505,
+          506,
+          507,
+          508,
+          510,
+          511
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "Int32GeneralResponse": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "FailedMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "StatusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          },
+          "Data": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginDTO": {
+        "required": [
+          "Email",
+          "Password"
+        ],
+        "type": "object",
+        "properties": {
+          "Email": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "Password": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "AccessToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "CookieOptions": {
+            "$ref": "#/components/schemas/CookieOptions"
+          },
+          "RefreshToken": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ObjectGeneralResponse": {
+        "type": "object",
+        "properties": {
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "FailedMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "StatusCode": {
+            "$ref": "#/components/schemas/HttpStatusCode"
+          },
+          "Data": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SameSiteMode": {
+        "enum": [
+          0,
+          1,
+          2,
+          -1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "TimeSpan": {
+        "type": "object",
+        "properties": {
+          "Ticks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "Days": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "Hours": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "Milliseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "Microseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "Nanoseconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "Minutes": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "Seconds": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "TotalDays": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "TotalHours": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "TotalMilliseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "TotalMicroseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "TotalNanoseconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "TotalMinutes": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "TotalSeconds": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserRoles": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "WeatherForecast": {
+        "type": "object",
+        "properties": {
+          "Date": {
+            "$ref": "#/components/schemas/DateOnly"
+          },
+          "TemperatureC": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "TemperatureF": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "Summary": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

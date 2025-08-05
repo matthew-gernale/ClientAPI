@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.21.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Using Include="Microsoft.AspNetCore.Mvc" />
+		<Using Include="Microsoft.AspNetCore.Authorization" />
+		<Using Include="Microsoft.EntityFrameworkCore" />
+		<Using Include="Microsoft.IdentityModel.Tokens" />
+		<Using Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+		<Using Include="System.Net" />
+		<Using Include="System.Data" />
+		<Using Include="System.Text" />
+		<Using Include="System.Text.Json" />
+		<Using Include="System.Security.Claims" />
+		<Using Include="System.IdentityModel.Tokens.Jwt" />
+		<Using Include="System.Security.Cryptography" />
+		<Using Include="System.Linq.Expressions" />
+		<Using Include="System.ComponentModel.DataAnnotations" />
+		<Using Include="System.ComponentModel.DataAnnotations.Schema" />
+
+		<Using Include="ClientAPI.Server.Data" />
+		<Using Include="ClientAPI.Server.Data.Models" />
+		<Using Include="ClientAPI.Server.Data.Enums" />
+		<Using Include="ClientAPI.Server.Utils" />
+		<Using Include="ClientAPI.Server.Response" />
+		<Using Include="ClientAPI.Server.Data.DTOs.AuthDTOs" />
+		<Using Include="ClientAPI.Server.Data.DTOs.ClientDTOs" />
+		
+		<Using Include="ClientAPI.Server.Repositories.AuthRepo" />
+		<Using Include="ClientAPI.Server.Repositories.ClientRepo" />
+	</ItemGroup>
+</Project>
