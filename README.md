@@ -2,8 +2,6 @@
 
 **ClientAPI** is a simple and secure ASP.NET Core Web API backend that manages client data and authentication for administrative systems. It supports core CRUD operations for clients and provides authentication with JWT and refresh tokens.
 
----
-
 ## ✅ Features
 
 ### 👤 Authentication (`/api/auth`)
@@ -18,9 +16,7 @@
 - `PUT /details` — Update client details
 - `DELETE /underage` — Delete all clients under the legal age
 
-> All client routes are **restricted to ADMIN role** and protected with JWT-based authorization.
-
----
+> **Note:** All client routes are **restricted to ADMIN role** and protected with JWT-based authorization.
 
 ## ⚙️ Tech Stack
 
@@ -31,34 +27,35 @@
 - **SOLID Principles**
 - **Repository Pattern** for clean separation of concerns
 
----
-
 ## 📦 Project Structure
+
+```
 ClientAPI/
 │
-├── Controllers/ # API endpoints (ClientController, AuthController)
+├── Controllers/
+│   ├── AuthController.cs
+│   └── ClientController.cs
 │
 ├── Data/
-│ ├── DTOs/ # Data transfer objects
-│ ├── Models/ # Entity models
-│ ├── Enums/ # Enum types
-│ ├── Response/ # Response models
-│ └── DataContext.cs # EF Core DbContext setup
+│   ├── DTOs/                # Data transfer objects
+│   ├── Models/              # Entity models
+│   ├── Enums/               # Enum definitions
+│   ├── Response/            # Response model wrappers
+│   └── DataContext.cs       # EF Core database context
 │
-├── Repositories/ # Interfaces and implementations for data access
+├── Repositories/            # Interfaces & implementations for data access
 │
 ├── Utils/
-│ ├── AuthUtil.cs # JWT generation and validation helpers
-│ ├── FinanceHelper.cs # Utilities for financial calculations
-│ ├── ModelMapper.cs # Mapping between entities and DTOs
-│ ├── ResponseHelper.cs # Response formatting and status helpers
-│ ├── TimeUtils.cs # Time conversion utilities
-│ └── UserUtils.cs # Extracting UserId and Role from HttpContext
+│   ├── AuthUtil.cs          # JWT handling
+│   ├── FinanceHelper.cs     # Finance-related utilities
+│   ├── ModelMapper.cs       # DTO-to-model mappings
+│   ├── ResponseHelper.cs    # Standardized API responses
+│   ├── TimeUtils.cs         # Time formatting helpers
+│   └── UserUtils.cs         # Get user info from HttpContext
 │
-├── Program.cs # Main entry point with DI, middleware, etc.
-└── appsettings.json # App configuration file
-
----
+├── Program.cs               # App entry point
+└── appsettings.json         # Configuration file
+```
 
 ## 🚀 Getting Started
 
@@ -71,57 +68,127 @@ ClientAPI/
 ### 🛠️ Setup Instructions
 
 1. **Clone the repository**
-```bash
-git clone https://github.com/your-username/ClientAPI.git
-cd ClientAPI
+   ```bash
+   git clone https://github.com/matthew-gernale/ClientAPI.git
+   cd ClientAPI
+   ```
 
-2. **Configure your database and JWT in appsettings.json**
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "your-database-connection-string"
-  },
-}
+2. **Configure your database and JWT in `appsettings.json`**
+   ```json
+   {
+     "ConnectionStrings": {
+       "DefaultConnection": "your-database-connection-string"
+     },
+   }
+   ```
 
 3. **Apply Migrations**
-dotnet ef database update
+   ```bash
+   dotnet ef database update
+   ```
 
 4. **Run the project**
-dotnet run
+   ```bash
+   dotnet run
+   ```
 
-5. **Test API using Postman**
-🔐 Step-by-Step Authorization with JWT in Postman
-a. Login and Get Access Token
+5. **Test API using Postman or visit Swagger UI**
+   - API: `https://localhost:7045/api`
+   - Swagger: `https://localhost:7045/swagger`
 
-Method: POST
-URL: https://localhost:{port}/api/auth/login
+## 🔐 Authentication Guide
 
-Body (JSON):
+### Step-by-Step Authorization with JWT in Postman
+
+#### a. Login and Get Access Token
+
+- **Method:** `POST`
+- **URL:** `https://localhost:7045/api/auth/login`
+- **Body (JSON):**
+  ```json
+  {
+    "Email": "admin@gmail.com",
+    "Password": "Admin2025"
+  }
+  ```
+- **Response (JSON):**
+  ```json
+  {
+    "AccessToken": "eyJhbGciOiJIUzI1NiIs...",
+    "RefreshToken": "..."
+  }
+  ```
+
+#### b. Use Access Token for Secured APIs
+
+1. Copy the `accessToken` from the login response
+2. In Postman, go to the **Authorization** tab:
+   - **Type:** Bearer Token
+   - **Token:** paste the `accessToken`
+3. Make authorized requests:
+   - `GET https://localhost:7045/api/client/paginated`
+   - `POST https://localhost:7045/api/client/add`
+   - `PUT https://localhost:7045/api/client/details`
+   - `DELETE https://localhost:7045/api/client/underage`
+
+## 📋 API Endpoints
+
+### Authentication Endpoints
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| POST | `/api/auth/login` | User login | No |
+| POST | `/api/auth/refresh-token` | Refresh access token | No |
+| POST | `/api/auth/logout` | User logout | Yes |
+
+### Client Management Endpoints
+| Method | Endpoint | Description | Auth Required | Role |
+|--------|----------|-------------|---------------|------|
+| POST | `/api/client/add` | Create new client | Yes | Admin |
+| GET | `/api/client/paginated` | Get paginated clients | Yes | Admin |
+| GET | `/api/client/details/{id}` | Get client details | Yes | Admin |
+| PUT | `/api/client/details` | Update client | Yes | Admin |
+| DELETE | `/api/client/underage` | Delete underage clients | Yes | Admin |
+
+## 🔧 Configuration
+
+### Database Configuration
+The application uses Entity Framework Core with SQL Server by default. Update the connection string in `appsettings.json`:
+
+```json
 {
-  "Email": "admin@gmail.com",
-  "Password": "Admin2025"
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=ClientApiDb;Trusted_Connection=true;TrustServerCertificate=true;"
+  }
 }
+```
 
-Response (JSON):
+### Sample Client Data
+```json
 {
-  "AccessToken": "eyJhbGciOiJIUzI1NiIs...",
-  "RefreshToken": "...",
-  ...
+  "FirstName": "John",
+  "LastName": "Doe",
+  "Email": "john.doe@example.com",
+  "Phone": "+1234567890",
+  "DateOfBirth": "1990-01-01",
+  "Address": "123 Main St, City, State 12345"
 }
+```
 
-b. Use Access Token for Secured APIs
-Copy the accessToken from the login response.
-In Postman, go to the Authorization tab:
 
-Type: Bearer Token
-Token: paste the accessToken
+## 👤 Author
 
-Make authorized requests like:
-GET https://localhost:{port}/api/client/paginated
-POST https://localhost:{port}/api/client/add
+**Matthew Gernale**
+- GitHub: [@matthew-gernale](https://github.com/matthew-gernale)
+- Email: matthewgernale26@gmail.com
 
-etc.
----
+## 🤝 Contributing
 
-👤 Author
-Matthew Gernale
-GitHub
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📞 Support
+
+If you have any questions or need help, please open an issue on GitHub or contact the author.
